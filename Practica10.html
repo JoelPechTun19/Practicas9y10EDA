@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: orange;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="number"] {
+            width: 30%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: red;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #matrixContainer {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+    <title>Matriz Cuadrada</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Generador de Matriz Cuadrada</h1>
+        <label for="matrixSize">Tamaño de la matriz:</label>
+        <input type="number" id="matrixSize" min="1" placeholder="Ingrese el tamaño">
+        <button id="generateMatrix">Generar Matriz</button>
+        <div id="matrixContainer"></div>
+    </div>
+    <script>
+        class MatrixGenerator {
+            constructor() {
+                this.matrixContainer = document.getElementById('matrixContainer');
+                this.generateButton = document.getElementById('generateMatrix');
+                this.generateButton.addEventListener('click', this.generateMatrix.bind(this));
+            }
+
+            generateMatrix() {
+                const matrixSize = parseInt(document.getElementById('matrixSize').value);
+
+                if (matrixSize <= 0 || isNaN(matrixSize)) {
+                    alert('Ingrese un tamaño válido para la matriz.');
+                    return;
+                }
+
+                const matrix = this.createMatrix(matrixSize);
+                this.displayMatrix(matrix);
+            }
+
+            createMatrix(size) {
+                const matrix = [];
+                for (let i = 0; i < size; i++) {
+                    matrix[i] = [];
+                    for (let j = 0; j < size; j++) {
+                        matrix[i][j] = i === j ? 1 : 0;
+                    }
+                }
+                return matrix;
+            }
+
+            displayMatrix(matrix) {
+                this.matrixContainer.innerHTML = '';
+                matrix.forEach(row => {
+                    const rowDiv = document.createElement('div');
+                    rowDiv.textContent = row.join(' ');
+                    this.matrixContainer.appendChild(rowDiv);
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new MatrixGenerator();
+        });
+    </script>
+</body>
+</html>
+
+
